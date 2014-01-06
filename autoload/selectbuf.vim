@@ -1660,7 +1660,10 @@ function! selectbuf#PushToFrontInMRU(bufNum, updImm)
     return
   endif
 
-  call remove(g:SB_MRUlist, index(g:SB_MRUlist, a:bufNum))
+  let l:pos = index(g:SB_MRUlist, a:bufNum)
+  if l:pos != -1
+    call remove(g:SB_MRUlist, l:pos)
+  endif
   call insert(g:SB_MRUlist, a:bufNum, 0)
   if s:GetSortNameByType(g:selBufDefaultSortOrder) ==# 'mru'
     call s:DynUpdate('m', a:bufNum + 0, !a:updImm)
