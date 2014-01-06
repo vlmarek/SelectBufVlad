@@ -1836,14 +1836,6 @@ function! s:InitializeMRU() " {{{
 endfunction " }}}
 
 function! s:InputBufNumber() " {{{
-  " Generate a line with spaces to clear the previous message.
-  let i = 1
-  let clearLine = "\r"
-  while i < &columns
-    let clearLine = clearLine . ' '
-    let i = i + 1
-  endwhile
-
   let bufNr = ''
   let abort = 0
   call s:Prompt(bufNr)
@@ -1868,7 +1860,6 @@ function! s:InputBufNumber() " {{{
     else
       let bufNr = bufNr . char
     endif
-    echon clearLine
     call s:Prompt(bufNr)
   endwhile
   if !abort && bufNr != ''
@@ -1877,7 +1868,8 @@ function! s:InputBufNumber() " {{{
 endfunction
 
 function! s:Prompt(bufNr)
-  echon "\rEnter Buffer Number: " . a:bufNr
+  redraw
+  echon "Enter Buffer Number: " . a:bufNr
 endfunction " }}}
 
 let s:mySNR = ''
